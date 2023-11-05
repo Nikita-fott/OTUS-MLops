@@ -1,0 +1,10 @@
+count_all_rows:  46994570 
+count_duplicates_rows:  0 
+count_fraud_rows:  2497312 
+count_without_fraud_rows:  44497258 
+missings_tx_datetime 0 
+missings_customer_id 65 
+missings_terminal_id 2046660 
+missings_tx_amount 892 
+negative_values_tx_amount 0 
+count_del_rows 17948 
