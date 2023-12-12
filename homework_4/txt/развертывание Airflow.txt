@@ -1,0 +1,83 @@
+нужно установить docker
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04
+
+для начала выполняем команду
+sudo dpkg --remove-architecture i386
+далеее по порядку
+
+
+обновить текущие список библиотек/пакетов?
+sudo apt update
+
+Затем установите несколько необходимых пакетов, которые позволят apt использовать пакеты через HTTPS
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+
+Затем добавьте ключ GPG для официального репозитория Docker в свою систему.
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+Добавьте репозиторий Docker в источники APT
+Это также обновит нашу базу данных пакетов пакетами Docker из недавно добавленного репозитория.:
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+
+Убедитесь, что вы собираетесь выполнить установку из репозитория Docker, а не из репозитория Ubuntu по умолчанию:
+apt-cache policy docker-ce
+
+Вы увидите такой вывод, хотя номер версии Docker может быть другим:
+docker-ce:
+  Installed: (none)
+  Candidate: 5:19.03.9~3-0~ubuntu-focal
+  Version table:
+     5:19.03.9~3-0~ubuntu-focal 500
+        500 https://download.docker.com/linux/ubuntu focal/stable amd64 Packages
+
+Теперь Docker должен быть установлен, демон запущен, и процесс может запускаться при загрузке. Убедитесь, что он работает:
+sudo systemctl status docker
+
+Output
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: active (running) since Tue 2020-05-19 17:00:41 UTC; 17s ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 24321 (dockerd)
+      Tasks: 8
+     Memory: 46.4M
+     CGroup: /system.slice/docker.service
+             └─24321 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+
+!!!!!!
+If you want to avoid typing sudo whenever you run the docker command, add your username to the docker group:
+sudo usermod -aG docker ${USER}
+
+
+
+Установка Airflow
+
+https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html
+
+Чтобы развернуть Airflow в Docker Compose, вам необходимо получить docker-compose.yaml.
+mkdir airflow
+curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.7.3/docker-compose.yaml'
+
+В Linux для быстрого запуска необходимо знать идентификатор пользователя вашего хоста и установить для идентификатора группы значение 0. В противном случае файлы, созданные в dags, журналах и плагинах, будут созданы с правами владельца root. Вы должны обязательно настроить их для docker-compose:
+mkdir -p ./dags ./logs ./plugins ./config
+echo -e "AIRFLOW_UID=$(id -u)" > .env
+
+после
+
+sudo docker compose up airflow-init
+
+после
+docker compose up
+
+выключить
+docker compose down
+
+
+Airflow - docker -youtube
+https://www.youtube.com/watch?v=t4h4vsULwFE&t=89s&ab_channel=BIInsightsInc
+
+
+
