@@ -117,3 +117,15 @@ mlflow.log_metric("recall", recall)
 mlflow.log_metric("Fmeasure", Fmeasure)
 
 ```
+
+### Mlflow артефакты
+
+Experiment
+![nikita-fott](img/mlflow_1.PNG)
+
+Model
+![nikita-fott-model](img/mlflow_2.PNG)
+
+Parameters & Metrics
+![nikita-fott-model](img/mlflow_3.PNG)
+
