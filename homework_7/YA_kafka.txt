@@ -1,0 +1,19 @@
+https://cloud.yandex.ru/ru/docs/managed-kafka/quickstart#linux-macos_1
+
+vim getcert_kafka.py
+вставить 
+
+mkdir -p /usr/local/share/ca-certificates/Yandex/ && \
+wget "https://storage.yandexcloud.net/cloud-certs/CA.pem" \
+     --output-document /usr/local/share/ca-certificates/Yandex/YandexInternalRootCA.crt && \
+chmod 0655 /usr/local/share/ca-certificates/Yandex/YandexInternalRootCA.crt
+
+сохранить :wq
+
+bash !$
+sudo !!
+
+после загрузиться сертификат YC в папку /usr/local/share/ca-certificates/Yandex/YandexInternalRootCA.crt
+
+установка kafkacat
+sudo apt update && sudo apt install -y kafkacat
